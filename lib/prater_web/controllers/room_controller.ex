@@ -16,7 +16,7 @@ defmodule PraterWeb.RoomController do
 
   def create(conn, %{"room" => room_params}) do
     case Conversation.create_room(room_params) do
-      {:ok, room} ->
+      {:ok, _room} ->
         conn
         |> put_flash(:info, "Room created successfully.")
         |> redirect(to: Routes.room_path(conn, :index))
@@ -41,12 +41,21 @@ defmodule PraterWeb.RoomController do
     room = Conversation.get_room!(id)
 
     case Conversation.update_room(room, room_params) do
-      {:ok, room} ->
+      {:ok, _room} ->
         conn
         |> put_flash(:info, "Room updated successfully.")
         |> redirect(to: Routes.room_path(conn, :show, room))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", room: room, changeset: changeset)
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    room = Conversation.get_room!(id)
+    {:ok, _room} = Conversation.delete_room(room)
+
+    conn
+    |> put_flash(:info, "Room deleted successfully.")
+    |> redirect(to: Routes.room_path(conn, :index))
   end
 end
