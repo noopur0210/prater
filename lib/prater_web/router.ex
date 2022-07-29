@@ -18,6 +18,8 @@ defmodule PraterWeb.Router do
     pipe_through :browser
 
     get "/", RoomController, :index
+    get "/rooms/new", RoomController, :new
+    post "/rooms", RoomController, :create
   end
 
   # Other scopes may use custom stacks.
