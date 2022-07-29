@@ -5,7 +5,7 @@ defmodule PraterWeb.RoomController do
   alias Prater.Conversation.Room
 
   def index(conn, _params) do
-    rooms = Prater.Conversation.list_rooms()
+    rooms = Conversation.list_rooms()
     render(conn, "index.html", rooms: rooms)
   end
 
@@ -24,5 +24,10 @@ defmodule PraterWeb.RoomController do
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  def show(conn, %{"id" => id}) do
+    room = Conversation.get_room!(id)
+    render(conn, "show.html", room: room)
   end
 end
