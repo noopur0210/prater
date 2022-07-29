@@ -43,3 +43,6 @@ liveSocket.connect()
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
